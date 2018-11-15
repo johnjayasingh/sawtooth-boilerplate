@@ -1,6 +1,6 @@
 const { TransactionHandler } = require('sawtooth-sdk/processor/handler');
 const { InternalError, InvalidTransaction } = require('sawtooth-sdk').exceptions;
-const { decodeData, hash } = require('./lib/helper');
+const { decodeData, hash } = require('../lib/helper');
 const cbor = require('cbor');
 const FAMILY_NAME = "wallet-family", VERSION = "1.0", NAMESPACE = ["wallet", "wallfam", hash(FAMILY_NAME).substr(0, 6)];
 
@@ -46,7 +46,7 @@ class WalletHandler extends TransactionHandler {
                                             throw new InvalidTransaction("Insufficiant Funds to complete the tranaction");
                                         }
                                         let entries = {
-                                            [address]: cbor.encode(value[id]);
+                                            [address]: cbor.encode(value[id])
                                         }
                                         context.setState(entries);
                                     }
@@ -63,3 +63,5 @@ class WalletHandler extends TransactionHandler {
     }
 
 }
+
+module.exports = WalletHandler;
